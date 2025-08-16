@@ -19,4 +19,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # 7) Start server: Daphne (ASGI) for Django Channels/WebSockets
-CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "atomxAI.asgi:application"]
+# Tell Render what port this container listens on
+EXPOSE 10000
+
+# Use Render’s $PORT (fallback 10000). Also collect static so admin/assets work.
+CMD ["sh", "-c", "python manage.py collectstatic --noinput && daphne -b 0.0.0.0 -p ${PORT:-10000} atomxAI.asgi:application"]
