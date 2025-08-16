@@ -21,7 +21,8 @@ COPY . .
 # 7) Start server: Daphne (ASGI) for Django Channels/WebSockets
 # Tell Render what port this container listens on
 # Tell Render which port we listen on
+# 7) Start server: Daphne (ASGI) for Django Channels/WebSockets
 EXPOSE 10000
 
-# Start Daphne on Render's $PORT (no collectstatic here)
-CMD ["sh", "-c", "daphne -b 0.0.0.0 -p ${PORT:-10000} atomxAI.asgi:application"]
+# Run migrations + collectstatic before starting Daphne
+CMD ["sh", "-c", "python atomxAI/manage.py migrate && python atomxAI/manage.py collectstatic --noinput && daphne -b 0.0.0.0 -p ${PORT:-10000} atomxAI.asgi:application"]
