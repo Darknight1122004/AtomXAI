@@ -25,10 +25,11 @@ ALTER COLUMN end_time TYPE time USING (end_time::time);
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("users", "0010_remove_student_log_student_log"),  # <-- keep the exact last good migration name from your repo
+        ("users", "0010_remove_student_log_student_logs"),  # <-- keep the exact last good migration name from your repo
     ]
 
     operations = [
         migrations.RunSQL(SQL_UP, SQL_DOWN),
     ]
+
 
