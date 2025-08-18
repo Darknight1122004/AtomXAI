@@ -25,4 +25,7 @@ COPY . .
 EXPOSE 10000
 
 # Run migrations + collectstatic before starting Daphne
-CMD ["sh", "-c", "python atomxAI/manage.py migrate && python atomxAI/manage.py collectstatic --noinput && daphne -b 0.0.0.0 -p ${PORT:-10000} atomxAI.asgi:application"]
+CMD ["sh", "-c", "cd atomxAI && \
+  python manage.py migrate && \
+  python manage.py collectstatic --noinput && \
+  daphne -b 0.0.0.0 -p ${PORT:-10000} atomxAI.asgi:application"]
